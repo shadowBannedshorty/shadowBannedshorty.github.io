@@ -41,26 +41,40 @@
       if(!headerEl) return;
 
       let lastY = window.scrollY;
-      const MIN_DELTA = 6;   // ignore tiny jitter
-      const TOP_EPS   = 4;   // always show near top
+      const MIN_DELTA = 6;        // ignore tiny jitter
+      const TOP_EPS   = 4;        // always show near top
+      const HIDE_THRESHOLD_PX = 80;   // don't hide until we've scrolled this far
+      const BOTTOM_BUFFER_PX  = 120;  // always show near page bottom
+
+      function atBottom(y){
+        const doc = document.documentElement;
+        const body = document.body;
+        const scrollHeight = Math.max(
+          body.scrollHeight, body.offsetHeight,
+          doc.clientHeight, doc.scrollHeight, doc.offsetHeight
+        );
+        const viewport = window.innerHeight || doc.clientHeight;
+        const maxY = scrollHeight - viewport;
+        return y >= (maxY - BOTTOM_BUFFER_PX);
+      }
 
       function onScroll(){
         const y = window.scrollY;
         const delta = y - lastY;
 
-        // Always show near the very top
-        if (y <= TOP_EPS) headerEl.classList.remove('hide');
-
-        if (Math.abs(delta) > MIN_DELTA){
-          if (delta > 0 && y > 24){
-            // scrolling down
+        // Always show near the very top or near the very bottom
+        if (y <= TOP_EPS || atBottom(y)) {
+          headerEl.classList.remove('hide');
+        } else if (Math.abs(delta) > MIN_DELTA){
+          if (delta > 0 && y > HIDE_THRESHOLD_PX){
+            // scrolling down past threshold -> hide
             headerEl.classList.add('hide');
           } else {
-            // scrolling up
+            // scrolling up -> show
             headerEl.classList.remove('hide');
           }
-          lastY = y;
         }
+        lastY = y;
       }
 
       // Reveal header if user focuses something inside it (keyboard/tab users)
@@ -71,11 +85,14 @@
       // Keep logic snappy & battery-friendly
       window.addEventListener('scroll', onScroll, { passive: true });
 
-      // On resize/orientation change, reset
-      window.addEventListener('resize', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
-      window.addEventListener('orientationchange', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
-    })();
+      // On resize/orientation change, reset + re-evaluate
+      function reset(){ headerEl.classList.remove('hide'); lastY = window.scrollY; onScroll(); }
+      window.addEventListener('resize', reset);
+      window.addEventListener('orientationchange', reset);
 
+      // initial evaluation
+      onScroll();
+    })();
 </script>
   <style>
     /* tiny print stylesheet so resumes look neat when printed */
@@ -283,26 +300,40 @@ git push -u origin feature/responsive-home
       if(!headerEl) return;
 
       let lastY = window.scrollY;
-      const MIN_DELTA = 6;   // ignore tiny jitter
-      const TOP_EPS   = 4;   // always show near top
+      const MIN_DELTA = 6;        // ignore tiny jitter
+      const TOP_EPS   = 4;        // always show near top
+      const HIDE_THRESHOLD_PX = 80;   // don't hide until we've scrolled this far
+      const BOTTOM_BUFFER_PX  = 120;  // always show near page bottom
+
+      function atBottom(y){
+        const doc = document.documentElement;
+        const body = document.body;
+        const scrollHeight = Math.max(
+          body.scrollHeight, body.offsetHeight,
+          doc.clientHeight, doc.scrollHeight, doc.offsetHeight
+        );
+        const viewport = window.innerHeight || doc.clientHeight;
+        const maxY = scrollHeight - viewport;
+        return y >= (maxY - BOTTOM_BUFFER_PX);
+      }
 
       function onScroll(){
         const y = window.scrollY;
         const delta = y - lastY;
 
-        // Always show near the very top
-        if (y <= TOP_EPS) headerEl.classList.remove('hide');
-
-        if (Math.abs(delta) > MIN_DELTA){
-          if (delta > 0 && y > 24){
-            // scrolling down
+        // Always show near the very top or near the very bottom
+        if (y <= TOP_EPS || atBottom(y)) {
+          headerEl.classList.remove('hide');
+        } else if (Math.abs(delta) > MIN_DELTA){
+          if (delta > 0 && y > HIDE_THRESHOLD_PX){
+            // scrolling down past threshold -> hide
             headerEl.classList.add('hide');
           } else {
-            // scrolling up
+            // scrolling up -> show
             headerEl.classList.remove('hide');
           }
-          lastY = y;
         }
+        lastY = y;
       }
 
       // Reveal header if user focuses something inside it (keyboard/tab users)
@@ -313,11 +344,14 @@ git push -u origin feature/responsive-home
       // Keep logic snappy & battery-friendly
       window.addEventListener('scroll', onScroll, { passive: true });
 
-      // On resize/orientation change, reset
-      window.addEventListener('resize', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
-      window.addEventListener('orientationchange', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
-    })();
+      // On resize/orientation change, reset + re-evaluate
+      function reset(){ headerEl.classList.remove('hide'); lastY = window.scrollY; onScroll(); }
+      window.addEventListener('resize', reset);
+      window.addEventListener('orientationchange', reset);
 
+      // initial evaluation
+      onScroll();
+    })();
 </script>
 </body>
 </html>
