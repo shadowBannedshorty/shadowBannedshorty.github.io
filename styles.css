@@ -453,3 +453,14 @@ header.elevate{
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   header{ background: var(--panel); }
 }
+
+/* --- Hide-on-scroll behavior --- */
+header{
+  transition: transform .28s ease, box-shadow .25s ease;
+  will-change: transform;
+}
+header.hide{ transform: translateY(-110%); }
+
+@media (prefers-reduced-motion: reduce){
+  header{ transition: none; }
+}

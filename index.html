@@ -34,7 +34,49 @@
       "TypeScript","JavaScript","QR code scanning","Audio/Video capture"
     ]
   }
-  </script>
+  
+    // Hide-on-scroll: header hides when scrolling down, shows when scrolling up.
+    (function(){
+      const headerEl = document.getElementById('siteHeader');
+      if(!headerEl) return;
+
+      let lastY = window.scrollY;
+      const MIN_DELTA = 6;   // ignore tiny jitter
+      const TOP_EPS   = 4;   // always show near top
+
+      function onScroll(){
+        const y = window.scrollY;
+        const delta = y - lastY;
+
+        // Always show near the very top
+        if (y <= TOP_EPS) headerEl.classList.remove('hide');
+
+        if (Math.abs(delta) > MIN_DELTA){
+          if (delta > 0 && y > 24){
+            // scrolling down
+            headerEl.classList.add('hide');
+          } else {
+            // scrolling up
+            headerEl.classList.remove('hide');
+          }
+          lastY = y;
+        }
+      }
+
+      // Reveal header if user focuses something inside it (keyboard/tab users)
+      window.addEventListener('focusin', (e) => {
+        if (headerEl.contains(e.target)) headerEl.classList.remove('hide');
+      });
+
+      // Keep logic snappy & battery-friendly
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // On resize/orientation change, reset
+      window.addEventListener('resize', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
+      window.addEventListener('orientationchange', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
+    })();
+
+</script>
   <style>
     /* tiny print stylesheet so resumes look neat when printed */
     @media print{
@@ -234,6 +276,48 @@ git push -u origin feature/responsive-home
         if (res.ok) document.getElementById('resumeBtn').style.display = 'inline-flex';
       } catch {}
     })();
-  </script>
+  
+    // Hide-on-scroll: header hides when scrolling down, shows when scrolling up.
+    (function(){
+      const headerEl = document.getElementById('siteHeader');
+      if(!headerEl) return;
+
+      let lastY = window.scrollY;
+      const MIN_DELTA = 6;   // ignore tiny jitter
+      const TOP_EPS   = 4;   // always show near top
+
+      function onScroll(){
+        const y = window.scrollY;
+        const delta = y - lastY;
+
+        // Always show near the very top
+        if (y <= TOP_EPS) headerEl.classList.remove('hide');
+
+        if (Math.abs(delta) > MIN_DELTA){
+          if (delta > 0 && y > 24){
+            // scrolling down
+            headerEl.classList.add('hide');
+          } else {
+            // scrolling up
+            headerEl.classList.remove('hide');
+          }
+          lastY = y;
+        }
+      }
+
+      // Reveal header if user focuses something inside it (keyboard/tab users)
+      window.addEventListener('focusin', (e) => {
+        if (headerEl.contains(e.target)) headerEl.classList.remove('hide');
+      });
+
+      // Keep logic snappy & battery-friendly
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // On resize/orientation change, reset
+      window.addEventListener('resize', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
+      window.addEventListener('orientationchange', () => { headerEl.classList.remove('hide'); lastY = window.scrollY; });
+    })();
+
+</script>
 </body>
 </html>
