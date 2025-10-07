@@ -47,7 +47,7 @@
 <body>
   <a href="#content" class="sr-only">Skip to content</a>
   <div class="wrap">
-    <header role="banner" aria-label="Header">
+    <header id="siteHeader" role="banner" aria-label="Header">
       <div class="topbar">
         <div class="brand" aria-label="Brand">
           <div class="logo" aria-hidden="true"></div>
@@ -223,6 +223,11 @@ git push -u origin feature/responsive-home
     });
 
     // Show résumé button only if resume.pdf exists
+    // Sticky header shadow on scroll
+    const siteHeader = document.getElementById("siteHeader");
+    const setHeaderElev = () => siteHeader && siteHeader.classList.toggle("elevate", window.scrollY > 4);
+    window.addEventListener("scroll", setHeaderElev, { passive: true });
+    setHeaderElev();
     (async () => {
       try {
         const res = await fetch('resume.pdf', { method: 'HEAD', cache: 'no-store' });

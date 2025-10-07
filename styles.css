@@ -1,13 +1,30 @@
+/* Base = LIGHT. We'll override to dark via media query or [data-theme="dark"] */
 :root{
+  --bg:#f6f8fb; --panel:#ffffff; --text:#111417; --muted:#4a5568;
+  --accent:#16a085; --accent-2:#3366ff; --ring:#16a08566;
+  --chip-bg:#f3f6fb; --chip-br:#e6eaf3; --focus:3px solid var(--accent);
+  --radius:14px; --shadow:0 12px 30px rgba(0,0,0,.10);
+}
+/* System dark preference (auto) */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b0c10; --panel:#14161a; --text:#e9edf1; --muted:#aab6c5;
+    --accent:#54d6a1; --accent-2:#8ab4ff; --ring:#54d6a180;
+    --chip-bg:#1b1f24; --chip-br:#2a2f36; --shadow:0 12px 30px rgba(0,0,0,.35);
+  }
+}
+/* Manual overrides (always win if present) */
+:root[data-theme="light"]{
+  --bg:#f6f8fb; --panel:#ffffff; --text:#111417; --muted:#4a5568;
+  --accent:#16a085; --accent-2:#3366ff; --ring:#16a08566;
+  --chip-bg:#f3f6fb; --chip-br:#e6eaf3; --shadow:0 12px 30px rgba(0,0,0,.10);
+}
+:root[data-theme="dark"]{
   --bg:#0b0c10; --panel:#14161a; --text:#e9edf1; --muted:#aab6c5;
   --accent:#54d6a1; --accent-2:#8ab4ff; --ring:#54d6a180;
-  --chip-bg:#1b1f24; --chip-br:#2a2f36; --focus:3px solid var(--accent);
-  --radius:14px; --shadow:0 12px 30px rgba(0,0,0,.35);
+  --chip-bg:#1b1f24; --chip-br:#2a2f36; --shadow:0 12px 30px rgba(0,0,0,.35);
 }
-@media (prefers-color-scheme: light){
-  :root{ --bg:#f6f8fb; --panel:#fff; --text:#111417; --muted:#4a5568;
-    --accent:#16a085; --accent-2:#3366ff; --chip-bg:#f3f6fb; --chip-br:#e6eaf3; --ring:#16a08566; }
-}
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
@@ -47,7 +64,392 @@ main{display:grid; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap:
 .thumb img{display:block; width:100%; height:auto}
 .meta{display:flex; flex-wrap:wrap; gap:8px}
 .meta .pill{font-size:.9rem; padding:6px 10px; border-radius:999px; border:1px solid var(--chip-br); background:var(--chip-bg)}
-.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
-:focus-visible{outline:var(--focus); outline-offset:2px}
-footer{margin-top:28px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; color:var(--muted)}
-@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border\
+
+cat > index.html <<'HTML'
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chris Broadnax — Frontend & ECHO Project</title>
+  <meta name="description" content="Chris Broadnax — frontend & mobile developer. HTML5/CSS3 responsive design, accessibility, cross-browser basics, Git workflow, and the ECHO app stack." />
+  <!-- Advertise support so browsers style form controls appropriately -->
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chris Broadnax — Frontend & ECHO Project" />
+  <meta property="og:description" content="Frontend & mobile developer. HTML5/CSS3, a11y, Git, and the ECHO stack (React Native, Expo, Firebase, A/V, QR, TS/JS)." />
+  <meta property="og:image" content="assets/social-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* small switch group styles */
+    .theme-group{display:inline-flex; gap:6px; align-items:center; border:1px solid var(--chip-br); background:var(--panel); padding:6px; border-radius:12px; box-shadow:var(--shadow)}
+    .theme-group button{border:1px solid var(--chip-br); background:var(--chip-bg); color:var(--text); padding:6px 10px; border-radius:10px; font:inherit}
+    .theme-group button[aria-pressed="true"]{outline:var(--focus); outline-offset:1px}
+  </style>
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Chris Broadnax","jobTitle":"Frontend / Mobile Developer","email":"mailto:chrisbroadnax.22@gmail.com","sameAs":["https://github.com/shadowBannedshorty"],"knowsAbout":["HTML5","CSS3 Grid/Flexbox","Responsive Web Design","Accessibility (a11y)","Cross-browser basics","Git branching, PRs, merges","React Native","Expo","Firebase (Auth, Firestore, Storage)","TypeScript","JavaScript","QR code scanning","Audio/Video capture"]}
+  </script>
+  <style>
+    @media print{
+      .btn, nav, .thumb, #contact-note, .theme-group { display:none !important; }
+      body{ background:#fff; color:#000; }
+      .card{ box-shadow:none; border:1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#content" class="sr-only">Skip to content</a>
+  <div class="wrap">
+    <header role="banner" aria-label="Header">
+      <div class="topbar">
+        <div class="brand" aria-label="Brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>Chris Broadnax</h1>
+            <p class="tagline">Frontend & Mobile — building the ECHO app</p>
+          </div>
+        </div>
+        <nav aria-label="Primary">
+          <a class="btn" href="#projects">Projects</a>
+          <a class="btn" href="#contact">Contact</a>
+          <a class="btn" id="resumeBtn" href="resume.pdf" download style="display:none">Download résumé (PDF)</a>
+          <!-- Theme control -->
+          <div class="theme-group" role="group" aria-label="Theme">
+            <button type="button" id="themeSystem" aria-pressed="true" title="Follow system theme">System</button>
+            <button type="button
+cat > index.html <<'HTML'
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chris Broadnax — Frontend & ECHO Project</title>
+  <meta name="description" content="Chris Broadnax — frontend & mobile developer. HTML5/CSS3 responsive design, accessibility, cross-browser basics, Git workflow, and the ECHO app stack." />
+  <!-- Advertise support so browsers style form controls appropriately -->
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chris Broadnax — Frontend & ECHO Project" />
+  <meta property="og:description" content="Frontend & mobile developer. HTML5/CSS3, a11y, Git, and the ECHO stack (React Native, Expo, Firebase, A/V, QR, TS/JS)." />
+  <meta property="og:image" content="assets/social-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* small switch group styles */
+    .theme-group{display:inline-flex; gap:6px; align-items:center; border:1px solid var(--chip-br); background:var(--panel); padding:6px; border-radius:12px; box-shadow:var(--shadow)}
+    .theme-group button{border:1px solid var(--chip-br); background:var(--chip-bg); color:var(--text); padding:6px 10px; border-radius:10px; font:inherit}
+    .theme-group button[aria-pressed="true"]{outline:var(--focus); outline-offset:1px}
+  </style>
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Chris Broadnax","jobTitle":"Frontend / Mobile Developer","email":"mailto:chrisbroadnax.22@gmail.com","sameAs":["https://github.com/shadowBannedshorty"],"knowsAbout":["HTML5","CSS3 Grid/Flexbox","Responsive Web Design","Accessibility (a11y)","Cross-browser basics","Git branching, PRs, merges","React Native","Expo","Firebase (Auth, Firestore, Storage)","TypeScript","JavaScript","QR code scanning","Audio/Video capture"]}
+  </script>
+  <style>
+    @media print{
+      .btn, nav, .thumb, #contact-note, .theme-group { display:none !important; }
+      body{ background:#fff; color:#000; }
+      .card{ box-shadow:none; border:1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#content" class="sr-only">Skip to content</a>
+  <div class="wrap">
+    <header role="banner" aria-label="Header">
+      <div class="topbar">
+        <div class="brand" aria-label="Brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>Chris Broadnax</h1>
+            <p class="tagline">Frontend & Mobile — building the ECHO app</p>
+          </div>
+        </div>
+        <nav aria-label="Primary">
+          <a class="btn" href="#projects">Projects</a>
+          <a class="btn" href="#contact">Contact</a>
+          <a class="btn" id="resumeBtn" href="resume.pdf" download style="display:none">Download résumé (PDF)</a>
+          <!-- Theme control -->
+          <div class="theme-group" role="group" aria-label="Theme">
+            <button type="button" id="themeSystem" aria-pressed="true" title="Follow system theme">System</button>
+            <button type="button" id="themeLight" aria-pressed="false" title="Use light theme">Light</button>
+            <button type="button" id="themeDark" aria-pressed="false" title="Use dark theme">Dark</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="card" aria-labelledby="skills-title">
+        <h2 id="skills-title">Core Web Skills</h2>
+        <p class="muted">A compact snapshot of what I use day-to-day.</p>
+
+        <div class="grid" role="list">
+          <article class="card" role="listitem" aria-labelledby="s1">
+            <h3 id="s1">HTML5 / CSS3 + Responsive</h3>
+            <div class="chips" aria-label="Tags">
+              <span class="chip"><span class="dot" aria-hidden="true"></span> HTML5 semantics</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> CSS Grid</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Flexbox</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Mobile-first</span>
+            </div>
+            <div class="features">
+              <div class="feat">
+                <div class="icon" aria-hidden="true"></div>
+                <div><strong>Responsive design principles:</strong> fluid layouts, clamp() typography, and accessible touch targets.</div>
+              </div>
+              <div class="feat">
+                <div class="icon" aria-hidden="true"></div>
+                <div><strong>Modern CSS:</strong> Grid for macro layout, Flexbox for micro-alignment, custom properties for theming.</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" aria-labelledby="s2">
+            <h3 id="s2">Cross-Browser & Accessibility</h3>
+            <div class="chips" aria-label="Tags">
+              <span class="chip"><span class="dot" aria-hidden="true"></span> a11y landmarks</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Keyboard focus</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Color contrast</span>
+            </div>
+            <div class="features">
+              <div class="feat">
+                <div class="icon" aria-hidden="true"></div>
+                <div><strong>Standards-minded:</strong> uses semantic elements, labels, and <code>prefers-reduced-motion</code>.</div>
+              </div>
+              <div class="feat">
+                <div class="icon" aria-hidden="true"></div>
+                <div><strong>Cross-browser basics:</strong> progressive enhancement and safe CSS features for consistent rendering.</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" role="listitem" aria-labelledby="s3">
+            <h3 id="s3">Git Workflow</h3>
+            <div class="chips" aria-label="Tags">
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Branching</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Pull Requests</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Merges</span>
+            </div>
+            <p class="muted" style="margin-top:8px">Comfortable with feature branches, PR reviews, and clean merge histories.</p>
+            <details>
+              <summary>Sample commands</summary>
+              <pre aria-label="Sample Git commands"><code>git switch -c feature/responsive-home
+git add -A && git commit -m "Implement responsive layout & a11y pass"
+git push -u origin feature/responsive-home
+# Open PR, request review, squash & merge on approval</code></pre>
+            </details>
+          </article>
+
+          <article class="card" role="listitem" aria-labelledby="s4">
+            <h3 id="s4">ECHO Project Stack (Mobile)</h3>
+            <div class="chips" aria-label="Tags">
+              <span class="chip"><span class="dot" aria-hidden="true"></span> React Native</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Expo</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Firebase (Auth/Firestore/Storage)</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> TypeScript / JS</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> QR Scan</span>
+              <span class="chip"><span class="dot" aria-hidden="true"></span> Audio/Video</span>
+            </div>
+            <p class="muted" style="margin-top:8px">Building a “Living Libraries” app with recorded stories (video/audio/text), categorized and searchable.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="card project" aria-labelledby="proj-title">
+        <h2 id="proj-title">Project Spotlight — ECHO</h2>
+        <figure class="thumb" role="img" aria-label="Abstract ECHO project thumbnail">
+          <img src="assets/echo-thumb.svg" alt="ECHO — Living Libraries abstract cover" />
+        </figure>
+        <p>
+          ECHO is a mobile app (Expo / React Native) that lets people capture, store, and share personal histories
+          (video, audio, text). It integrates Firebase for auth, Firestore for the feed, and Storage for media.
+          QR codes let users retrieve entries quickly; future versions auto-categorize content.
+        </p>
+        <div class="meta" aria-label="Tech used">
+          <span class="pill">React Native</span><span class="pill">Expo</span>
+          <span class="pill">Firebase</span><span class="pill">TypeScript / JavaScript</span>
+          <span class="pill">A/V + QR</span>
+        </div>
+        <details>
+          <summary>What I’m responsible for</summary>
+          <ul>
+            <li>Responsive UI patterns & accessible components</li>
+            <li>Firebase auth wiring + Firestore data modeling</li>
+            <li>Video/audio capture flows and media playback</li>
+            <li>QR scan & deep-link retrieval</li>
+            <li>Git branching, PR reviews, merges</li>
+          </ul>
+        </details>
+        <div>
+          <a class="btn" href="#contact" aria-describedby="contact-note">Get in touch</a>
+          <p id="contact-note" class="muted" style="margin-top:8px">Happy to walk through the code and decisions.</p>
+        </div>
+      </section>
+    </main>
+
+    <section id="contact" class="card" aria-labelledby="contact-title" style="margin-top:24px">
+      <h2 id="contact-title">Contact</h2>
+      <p class="muted">Want to collaborate or see more? Reach out.</p>
+      <div class="features" style="margin-top: 0;">
+        <div class="feat">
+          <div class="icon" aria-hidden="true"></div>
+          <div>
+            <strong>Email:</strong>
+            <a id="email" href="mailto:chrisbroadnax.22@gmail.com">chrisbroadnax.22@gmail.com</a>
+            <div style="margin-top:8px">
+              <button class="btn" id="copyEmail" type="button" aria-live="polite">Copy email</button>
+            </div>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="icon" aria-hidden="true"></div>
+          <div>
+            <strong>GitHub:</strong>
+            <a href="https://github.com/shadowBannedshorty" target="_blank" rel="noopener">shadowBannedshorty</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer role="contentinfo">
+      <span>© <span id="year"></span> Chris Broadnax</span>
+      <span>Built with semantic HTML, modern CSS, and care for accessibility.</span>
+    </footer>
+  </div>
+
+  <script>
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Copy email helper
+    const copyBtn = document.getElementById('copyEmail');
+    copyBtn?.addEventListener('click', async () => {
+      const email = document.getElementById('email').textContent.trim();
+      try {
+        await navigator.clipboard.writeText(email);
+        copyBtn.textContent = 'Copied ✓';
+        setTimeout(() => copyBtn.textContent = 'Copy email', 1600);
+      } catch {
+        copyBtn.textContent = 'Press ⌘/Ctrl+C to copy';
+        setTimeout(() => copyBtn.textContent = 'Copy email', 2000);
+      }
+    });
+
+    // --- THEME LOGIC ---------------------------------------------------------
+    const root = document.documentElement;
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const KEY = 'cb_theme_pref'; // 'light' | 'dark' | 'system'
+
+    function applyTheme(mode){
+      // Clear manual override if system
+      if(mode === 'system'){
+        root.removeAttribute('data-theme'); // let CSS + media query decide
+        setPressed('system');
+        return;
+      }
+      root.setAttribute('data-theme', mode); // light or dark
+      setPressed(mode);
+    }
+    function setPressed(active){
+      document.getElementById('themeSystem').setAttribute('aria-pressed', active==='system');
+      document.getElementById('themeLight').setAttribute('aria-pressed', active==='light');
+      document.getElementById('themeDark').setAttribute('aria-pressed', active==='dark');
+    }
+    // Initial: load saved pref or default to system
+    const saved = localStorage.getItem(KEY) || 'system';
+    applyTheme(saved);
+
+    // React to system changes only if user is on "system" mode
+    mql.addEventListener?.('change', () => {
+      if((localStorage.getItem(KEY) || 'system') === 'system'){
+        applyTheme('system');
+      }
+    });
+
+    // Buttons
+    document.getElementById('themeSystem').onclick = () => { localStorage.setItem(KEY,'system'); applyTheme('system'); };
+    document.getElementById('themeLight').onclick  = () => { localStorage.setItem(KEY,'light');  applyTheme('light');  };
+    document.getElementById('themeDark').onclick   = () => { localStorage.setItem(KEY,'dark');   applyTheme('dark');   };
+
+    // Show résumé button only if resume.pdf exists
+    (async () => {
+      try {
+        const res = await fetch('resume.pdf', { method: 'HEAD', cache: 'no-store' });
+        if (res.ok) document.getElementById('resumeBtn').style.display = 'inline-flex';
+      } catch {}
+    })();
+  </script>
+</body>
+</html>
+HTML
+git add -A
+git commit -m "Feat: automatic dark/light + user override (System/Light/Dark)"
+git push
+# Sun
+cat > assets/icon-sun.svg <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm0 4a1 1 0 0 1-1-1v-1.1a1 1 0 1 1 2 0V21a1 1 0 0 1-1 1ZM12 3.1a1 1 0 0 1 1 1V5.2a1 1 0 1 1-2 0V4.1a1 1 0 0 1 1-1ZM3 13a1 1 0 0 1-1-1 1 1 0 0 1 1-1h1.1a1 1 0 1 1 0 2H3Zm16.9 0a1 1 0 1 1 0-2H21a1 1 0 1 1 0 2h-1.1ZM5.05 19.07a1 1 0 0 1 0-1.41l.78-.78a1 1 0 1 1 1.41 1.41l-.78.78a1 1 0 0 1-1.41 0Zm11.71-11.7a1 1 0 1 1 1.41-1.42l.78.78a1 1 0 1 1-1.41 1.41l-.78-.77Zm-11.71 0-.78-.78A1 1 0 0 1 6.8 5.17l.78.78A1 1 0 0 1 6.17 7.36Zm12.49 12.49-.78-.78a1 1 0 1 1 1.41-1.41l.78.78a1 1 0 1 1-1.41 1.41Z"/></svg>
+SVG
+# Moon
+cat > assets/icon-moon.svg <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+SVG
+# System (half sun/moon)
+cat > assets/icon-system.svg <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v18a9 9 0 0 0 0-18Z"/><path d="M12 21a9 9 0 1 1 0-18v18Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+SVG
+# This overwrites only the small inline toggle style block inside index.html.
+# If you'd rather keep it in styles.css, you can move it there.
+sed -i '/small switch group styles/,$d' index.html
+awk '1;/<link rel="stylesheet" href="styles.css" \/>/{print "\
+  <style>\n\
+    /* Theme icon buttons */\n\
+    .theme-group{display:inline-flex; gap:6px; align-items:center; border:1px solid var(--chip-br); background:var(--panel); padding:6px; border-radius:12px; box-shadow:var(--shadow)}\n\
+    .theme-btn{border:1px solid var(--chip-br); background:var(--chip-bg); color:var(--text); width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; cursor:pointer}\n\
+    .theme-btn[aria-pressed=\"true\"]{outline:var(--focus); outline-offset:1px}\n\
+    .theme-btn:focus-visible{outline:var(--focus); outline-offset:2px}\n\
+    .theme-btn img{width:20px; height:20px; display:block}\n\
+    @media (prefers-reduced-motion: no-preference){\n\
+      .theme-btn.spin img{transition: transform .4s}\n\
+      .theme-btn.spin:active img{transform: rotate(180deg)}\n\
+    }\n\
+  </style>"}' index.html > /tmp/index.tmp && mv /tmp/index.tmp index.html
+python3 - <<'PY'
+from pathlib import Path, re
+p=Path('index.html'); s=p.read_text()
+s=re.sub(r'<div class="theme-group".*?</div>','''<div class="theme-group" role="group" aria-label="Theme">
+  <button type="button" class="theme-btn spin" id="themeSystem" aria-pressed="true" title="Follow system theme"><img src="assets/icon-system.svg" alt="System"></button>
+  <button type="button" class="theme-btn spin" id="themeLight" aria-pressed="false" title="Use light theme"><img src="assets/icon-sun.svg" alt="Light"></button>
+  <button type="button" class="theme-btn spin" id="themeDark" aria-pressed="false" title="Use dark theme"><img src="assets/icon-moon.svg" alt="Dark"></button>
+</div>''', s, flags=re.S)
+p.write_text(s)
+PY
+git add -A
+git commit -m "UI: sun/moon/system icon theme toggle"
+git push
+# append sticky header styles to the end of styles.css
+cat >> styles.css <<'CSS'
+
+/* --- Sticky header + scroll shadow --- */
+header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* translucent panel to avoid hard bar; keeps theme colors */
+  background: color-mix(in oklab, var(--panel) 85%, transparent 15%);
+  backdrop-filter: saturate(120%) blur(6px);
+  -webkit-backdrop-filter: saturate(120%) blur(6px);
+  border-bottom: 1px solid color-mix(in oklab, var(--chip-br), transparent 40%);
+}
+header.elevate{
+  /* subtle drop shadow when scrolled */
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+
+/* fallback if backdrop-filter unsupported */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
+  header{ background: var(--panel); }
+}
