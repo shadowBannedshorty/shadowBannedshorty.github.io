@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#54d6a1"/><stop offset="1" stop-color="#8ab4ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#14161a"/>
+  <rect x="140" y="160" width="1320" height="580" rx="28" fill="url(#g1)" opacity=".25"/>
+  <g fill="#e9edf1" font-family="Inter, Arial, sans-serif" font-weight="700" text-anchor="middle">
+    <text x="800" y="470" font-size="72">ECHO — Living Libraries</text>
+  </g>
+</svg>

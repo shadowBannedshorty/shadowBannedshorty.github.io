@@ -1,0 +1,53 @@
+:root{
+  --bg:#0b0c10; --panel:#14161a; --text:#e9edf1; --muted:#aab6c5;
+  --accent:#54d6a1; --accent-2:#8ab4ff; --ring:#54d6a180;
+  --chip-bg:#1b1f24; --chip-br:#2a2f36; --focus:3px solid var(--accent);
+  --radius:14px; --shadow:0 12px 30px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f6f8fb; --panel:#fff; --text:#111417; --muted:#4a5568;
+    --accent:#16a085; --accent-2:#3366ff; --chip-bg:#f3f6fb; --chip-br:#e6eaf3; --ring:#16a08566; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  background: radial-gradient(1200px 600px at 10% -20%, var(--panel) 0%, var(--bg) 50%) fixed, var(--bg);
+  color:var(--text); line-height:1.65;
+}
+a{color:var(--accent-2); text-decoration:none}
+a:hover,a:focus{text-decoration:underline}
+.wrap{max-width:1120px; margin:0 auto; padding:32px 20px 64px}
+header{display:grid; gap:16px; margin-bottom:24px}
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.brand{display:flex; align-items:center; gap:12px}
+.brand .logo{width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 6px 18px var(--ring)}
+h1{font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.25rem); margin:0; letter-spacing:.3px}
+.tagline{color:var(--muted); margin:0}
+.btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; border:1px solid var(--chip-br); background:var(--panel); color:var(--text); box-shadow:var(--shadow)}
+.btn:focus-visible{outline:var(--focus); outline-offset:2px}
+main{display:grid; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap:28px}
+@media (max-width: 900px){ main{ grid-template-columns: 1fr; } }
+
+.card{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 95%, transparent 5%), var(--panel));
+  border:1px solid var(--chip-br); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
+.card h2{font-size:clamp(1.15rem, 1rem + .6vw, 1.5rem); margin:0 0 12px}
+.muted{color:var(--muted)}
+.grid{display:grid; gap:14px; grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){ .grid{grid-template-columns:1fr} }
+
+.chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
+.chip{background:var(--chip-bg); border:1px solid var(--chip-br); padding:8px 12px; border-radius:999px; font-size:.95rem; line-height:1; display:inline-flex; gap:8px; align-items:center}
+.chip .dot{width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--ring)}
+.features{display:grid; gap:10px; margin:10px 0 0}
+.feat{display:grid; grid-template-columns:28px 1fr; align-items:start; gap:10px; padding:10px 12px; border-radius:12px; border:1px dashed var(--chip-br); background: color-mix(in oklab, var(--chip-bg), transparent 20%)}
+.feat .icon{width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+.project{display:grid; gap:14px}
+.thumb{border-radius:12px; border:1px solid var(--chip-br); overflow:hidden}
+.thumb img{display:block; width:100%; height:auto}
+.meta{display:flex; flex-wrap:wrap; gap:8px}
+.meta .pill{font-size:.9rem; padding:6px 10px; border-radius:999px; border:1px solid var(--chip-br); background:var(--chip-bg)}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+:focus-visible{outline:var(--focus); outline-offset:2px}
+footer{margin-top:28px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; color:var(--muted)}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
